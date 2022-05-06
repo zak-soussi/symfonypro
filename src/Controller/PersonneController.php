@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Personne;
+use App\Form\PersonneFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +15,11 @@ class PersonneController extends AbstractController
     #[Route('/all', name: 'personne.all')]
     public function index1(ManagerRegistry $doctrine): Response
     {
+        $personne=new Personne();
+     $form=$this->createForm(PersonneFormType::class,$personne);
 
-        $repo=$doctrine->getRepository(Personne::class);
-        $ps=$repo->findBy();
 
-       return $this->render("personne/index.html.twig",["ps1"=>$ps]);
+       return $this->render("personne/index.html.twig",["form"=>$form->createView()]);
     }
 
     #[Route('', name: 'personne')]
